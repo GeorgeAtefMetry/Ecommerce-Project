@@ -1,0 +1,76 @@
+<div class="container-fluid" style="height:3000px ;">
+    <div class="mb-2">
+        <label for="prodCat">Select Category: </label>
+        <select name="CAT" id="prodCat" class="form-control" [(ngModel)]="selectedCatID" (ngModelChange)="SearchProduct(selectedCatID)">
+            <option *ngFor="let cat of catList" [value]="cat.id">{{cat.name}}</option>
+        </select>
+        <p>{{selectedCatID}}</p>
+    </div>
+
+    
+<table class="table">
+    <thead>
+        <tr class="bg-dark text-light">
+            <th scope="col">Name</th>
+            <th scope="col">No</th>
+            <th scope="col">Image</th>
+            <th scope="col">Id</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+            <th scope="col">Switch</th>
+            <th scope="col">Buy</th>
+            <th scope="col">Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- index built in value in ngfor -->
+        <!-- <tr *ngFor="let pro of productList; let i=index"> -->
+            <ng-container  *ngFor="let pro of productList; let i=index" trackBy:trackByFunc >
+                <tr [hidden]="pro.quantity==0"  [ngStyle]="{'background-color':(pro.quantity==2)?'#f7c4c4':'#68bed7'}">
+                    <td>{{pro.name}}</td>
+                    <td>{{i+1}}</td>
+                    <td><img [src]="pro.imgURL" alt="" ></td>
+                    <td>{{pro.id}}</td>
+                    <td>{{pro.quantity}}</td>
+                    <td>{{pro.price | currency:'EGP'}}</td>
+                    <td>{{pro.price | usdtoEgp | currency:'USD'}}</td>
+                    <td><button class="btn btn-success"  (click)="Decrease(pro)">Buy</button></td>
+                </tr>
+            </ng-container>
+        
+    </tbody>
+</table>
+
+<div class="cards" style="display:flex;margin:auto">
+    <div class="card text-center" style="width: 18rem;" >
+        <div class="card-body" appColorBox>
+            <h5 class="card-title">ID National to BirthDate</h5>
+            <p class="card-text">{{'29903061772' | iDtoBirth }}</p>
+            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link">Another link</a>
+        </div>
+    </div>
+    <div class="card text-center" style="width: 18rem;" >
+        <div class="card-body" appColorBox>
+            <h5 class="card-title">Credit</h5>
+            <p class="card-text">{{'1234567891234567' | creditPipe }}</p>
+            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link">Another link</a>
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+
+
+<!-- <tr *ngFor="let pro of productList; let i=index" trackBy:trackByFunc [class.test]="pro.quantity==0" [ngClass]="{'bg-warning':pro.quantity==0}"> -->
+
+<!-- <ng-container [ngSwitch]="pro.quantity" > 
+    <ng-container *ngSwitchCase="0">Out of Stock</ng-container>
+    <ng-container *ngSwitchCase="1">last Item</ng-container>
+    <ng-container *ngSwitchCase="2">last two item</ng-container>
+    <ng-container *ngSwitchCase="3">Out of Stock</ng-container>
+</ng-container> -->
+
